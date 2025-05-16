@@ -7,7 +7,7 @@ class HasOutboxPayload(Protocol):
     queue: str
 
     created_at: datetime
-    sent: bool
+    is_published: bool
     is_failed: bool
     retry_count: int
 
