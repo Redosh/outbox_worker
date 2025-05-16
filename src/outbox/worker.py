@@ -129,6 +129,6 @@ def count_complete_tasks(tasks_info: EventResults, results: list[None | Exceptio
         if isinstance(result, Exception):
             record.retry_count += 1
         else:
-            record.sent = True
+            record.is_published = True
             sent += 1
     return sent
