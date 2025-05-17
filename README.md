@@ -21,6 +21,7 @@ from your_project.handlers import YourHandler
 from your_project.repos import your_event_repository_factory
 
 router = EventHandlerRouter(
+    source="profile",
     handlers={
         "queue_name": YourHandler(),
     }

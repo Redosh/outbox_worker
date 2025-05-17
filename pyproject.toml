@@ -1,6 +1,6 @@
 [project]
 name = "outbox-worker"
-version = "0.1.1"
+version = "0.2.0"
 description = "Generic outbox worker for FastStream and custom repositories"
 authors = [{ name = "k3l3vr444" }]
 license = {text = "MIT"}

@@ -29,7 +29,16 @@ class PydanticValidatedHandler(EventHandler, ABC):
 
 
 class EventHandlerRouter:
-    def __init__(self, handlers: dict[str, EventHandler], default: EventHandler | None = None):
+    def __init__(
+        self,
+        handlers: dict[str, EventHandler],
+        source: str,
+        default: EventHandler | None = None,
+    ):
+        if not source:
+            raise ValueError("Source should be set")
+        self.source = source
+
         self._handlers = handlers
         self._default = default
 
@@ -41,4 +50,6 @@ class EventHandlerRouter:
         raise ValueError(f"No handler for queue: {record.queue}")
 
     def to_payload(self, record: HasOutboxPayload) -> dict:
-        return self.get_handler(record).to_payload(record)
+        data = self.get_handler(record).to_payload(record)
+        data["source"] = self.source
+        return data
