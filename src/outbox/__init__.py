@@ -1,7 +1,11 @@
+from .handler import EventHandlerRouter, PydanticValidatedHandler, EventHandler
+from .schemas import BaseEventSchema
 from .worker import OutboxWorker
-from .handler import  EventHandlerRouter
 
 __all__ = [
-    "OutboxWorker",
+    "BaseEventSchema",
+    "EventHandler",
     "EventHandlerRouter",
+    "OutboxWorker",
+    "PydanticValidatedHandler",
 ]

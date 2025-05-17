@@ -16,7 +16,7 @@ outbox-worker = { git = "https://github.com/your-org/outbox-worker.git" }
 ## Quick Start
 ```python
 from faststream.rabbit import RabbitBroker
-from outbox_worker import OutboxWorker, EventHandlerRouter
+from outbox import OutboxWorker, EventHandlerRouter
 from your_project.handlers import YourHandler
 from your_project.repos import your_event_repository_factory
 
@@ -45,7 +45,7 @@ await worker.run_polling()
 - `queue: str`
 - `created_at: datetime`
 - `payload: dict`
-- `sent: bool`
+- `is_published: bool`
 - `retry_count: int`
 - `is_failed: bool`
 

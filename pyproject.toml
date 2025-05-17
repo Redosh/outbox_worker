@@ -1,6 +1,6 @@
 [project]
 name = "outbox-worker"
-version = "0.1.0"
+version = "0.1.1"
 description = "Generic outbox worker for FastStream and custom repositories"
 authors = [{ name = "k3l3vr444" }]
 license = {text = "MIT"}
@@ -9,7 +9,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "pydantic>=2.0",
-    "faststream[rabbit]>=0.4.3"
+    "faststream[rabbit]>=0.5.40"
 ]
 
 [build-system]

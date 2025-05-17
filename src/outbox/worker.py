@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import signal
 from typing import Sequence
 
 from faststream.rabbit import RabbitBroker
@@ -39,6 +40,19 @@ class OutboxWorker:
 
     async def run_polling(self) -> None:
         loop = asyncio.get_running_loop()
+
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            loop.add_signal_handler(sig, asyncio.create_task, self.stop())
+
+        try:
+            logging.info("Connecting to broker…")
+            await self.broker.connect()
+            logging.info("Starting loop…")
+            await self.run_until_stop(loop)
+        finally:
+            await self.broker.close()
+
+    async def run_until_stop(self, loop):
         semaphore = asyncio.Semaphore(self._max_concurrent)
         next_run = loop.time()
 
