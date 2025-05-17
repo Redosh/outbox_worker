@@ -61,7 +61,7 @@ async def dummy_repo_factory() -> AsyncGenerator[DummyOutboxEventRepo, None]:
 
 @pytest.mark.asyncio
 async def test_prepare_tasks_info_valid():
-    router = EventHandlerRouter({"q": DummyHandler()})
+    router = EventHandlerRouter({"q": DummyHandler()}, "source")
     dummy_broker = AsyncMock(spec=RabbitBroker)
     worker = OutboxWorker(
         event_repository_factory=dummy_repo_factory,
@@ -86,7 +86,7 @@ async def test_prepare_tasks_info_valid():
 
 @pytest.mark.asyncio
 async def test_prepare_tasks_info_invalid():
-    router = EventHandlerRouter({"q": BrokenHandler()})
+    router = EventHandlerRouter({"q": BrokenHandler()}, "source")
     dummy_broker = AsyncMock(spec=RabbitBroker)
     worker = OutboxWorker(
         event_repository_factory=dummy_repo_factory,

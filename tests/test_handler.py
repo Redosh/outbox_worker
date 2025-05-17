@@ -48,7 +48,7 @@ def invalid_record():
 def test_valid_payload(valid_record):
     handler = DummyHandler()
     payload = handler.to_payload(valid_record)
-    assert payload["id"] == 1
+    assert payload["id"] == valid_record.id
     assert payload["user_id"] == 123
 
 
@@ -60,20 +60,28 @@ def test_invalid_payload(invalid_record):
 
 def test_router_dispatch(valid_record):
     handler = DummyHandler()
-    router = EventHandlerRouter(handlers={"dummy": handler})
+    router = EventHandlerRouter(handlers={"dummy": handler}, source="test_source")
     result = router.to_payload(valid_record)
     assert result["id"] == valid_record.id
+    assert result["user_id"] == valid_record.payload["user_id"]
+    assert result["source"] == "test_source"
 
 
 def test_router_default_handler(valid_record):
     default_handler = DummyHandler()
-    router = EventHandlerRouter(handlers={}, default=default_handler)
+    router = EventHandlerRouter(handlers={}, source="test_source", default=default_handler)
     valid_record.queue = "unknown"
     result = router.to_payload(valid_record)
     assert result["id"] == valid_record.id
+    assert result["source"] == "test_source"
 
 
 def test_router_no_handler(valid_record):
-    router = EventHandlerRouter(handlers={})
+    router = EventHandlerRouter(handlers={}, source="test_source")
     with pytest.raises(ValueError):
         router.to_payload(valid_record)
+
+def test_router_init_without_source_raises():
+    with pytest.raises(ValueError):
+        EventHandlerRouter(handlers={"dummy": DummyHandler()}, source="")
+
