@@ -1,6 +1,6 @@
 [project]
 name = "outbox-worker"
-version = "0.2.0"
+version = "1.0.0"
 description = "Generic outbox worker for FastStream and custom repositories"
 authors = [{ name = "k3l3vr444" }]
 license = {text = "MIT"}
@@ -15,3 +15,66 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "tmp"
+]
+line-length = 120
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D", "RET504", "PGH003", "FBT001", "EM101", "TRY003"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+"tests/**/*.py" = ["S101", "S106", "D", "PLR2004", "PT003", "PT006", "ARG001"]
+"**/schemas.py" = ["N805"] # Only for pydantic
+"src/infrastructure/db/migrations/*.py" = ["INP001"]
+"src/infrastructure/db/migrations/env.py" = ["ANN001", "ANN201"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 5
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+strict = true
+exclude = '(^venv/|^\.venv/|^tmp/|^src/infrastructure/db/migrations/)'
+[tool.coverage.report]
+exclude_lines = [
+  '^\s*\.\.\.',
+]

@@ -1,5 +1,7 @@
+from collections.abc import Sequence
+from contextlib import AbstractAsyncContextManager
 from datetime import datetime
-from typing import Protocol, Sequence, AsyncContextManager
+from typing import Any, Protocol
 
 
 class HasOutboxPayload(Protocol):
@@ -11,11 +13,12 @@ class HasOutboxPayload(Protocol):
     is_failed: bool
     retry_count: int
 
-    payload: dict
+    payload: dict[str, Any]
 
 
 class HasCommit(Protocol):
-    async def commit(self) -> None: ...
+    async def commit(self) -> None:
+        ...
 
 
 class OutboxEventRepository(Protocol):
@@ -26,5 +29,5 @@ class OutboxEventRepository(Protocol):
 
 
 class EventRepositoryFactory(Protocol):
-    def __call__(self) -> AsyncContextManager[OutboxEventRepository]:
+    def __call__(self) -> AbstractAsyncContextManager[OutboxEventRepository]:
         ...

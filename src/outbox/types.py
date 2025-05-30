@@ -1,4 +1,5 @@
-from typing import TypeAlias
+from typing import Any
+
 from .protocols import HasOutboxPayload
 
-EventResults: TypeAlias = list[tuple[HasOutboxPayload, dict]]
+type EventResults = list[tuple[HasOutboxPayload, dict[str, Any]]]

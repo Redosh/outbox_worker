@@ -1,4 +1,4 @@
-from .handler import EventHandlerRouter, PydanticValidatedHandler, EventHandler
+from .handler import EventHandler, EventHandlerRouter, PydanticValidatedHandler
 from .schemas import BaseEventSchema
 from .worker import OutboxWorker
 

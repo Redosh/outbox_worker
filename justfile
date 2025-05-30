@@ -5,4 +5,6 @@ release:
 
 
 test:
+    ruff check . --fix
+    mypy . --config=pyproject.toml
     pytest --maxfail=1
